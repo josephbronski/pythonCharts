@@ -2,7 +2,6 @@ pandas
 scikit-learn
 matplotlib
 numpy
-random
 statsmodels
 scipy
 factor-analyzer
