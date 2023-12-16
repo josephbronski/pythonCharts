@@ -359,3 +359,27 @@ def rChartSim(xLabel, yLabel, rValue, mean=(0,0), sd=(1,1), n=1000, size=5, file
 
     plt.savefig(fileName, dpi=300)  # Save the figure as a high-res PNG file
     plt.show()
+
+def correlatedVar(r, oldVar, SIZE=1000):
+    normOld = (oldVar - oldVar.mean()) / oldVar.std()
+    newVar = ((1-r**2)**.5)*np.random.normal(size=SIZE) + r*normOld
+    return newVar
+
+def scale(mean, sd, X):
+    normX = (X - X.mean()) / X.std()
+    newX = (normX*sd) + mean
+    return newX
+
+def corrMatrix(lists):
+    Corrs = np.zeros((len(lists[0]), len(lists)))
+    for i,obj in enumerate(lists):
+        Corrs[:,i] = obj
+    return np.dot(Corrs.T, Corrs)/len(lists[0])
+
+def expectation(l1, p):
+    return sum([l1[i]*p[i] for i in range(len(l1))])
+
+def variance(l1, p):
+    e = expectation(l1, p)
+    l2 = [i**2 for i in l1]
+    return expectation(l2, p) - e**2
